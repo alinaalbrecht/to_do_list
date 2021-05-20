@@ -1,0 +1,76 @@
+/* test */
+
+.main-content__to-do-list {
+  height: 100px;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Quicksand', sans-serif;
+}
+.hidden {
+  display: none;
+}
+
+body {
+  margin: 0;
+}
+
+.to-do-list-app {
+  margin: 0;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.to-do-list-app__project-sidebar {
+  background-color: aquamarine;
+  width: 20%;
+  height: 100vh;
+  padding: 2%;
+}
+.usr-gen-folders {
+}
+.to-do-list-app__main-content {
+  width: 80%;
+  margin: 0 4%;
+}
+
+.main-content__add-todo {
+  width: 100%;
+  background-color: #e1e1e1;
+  border: none;
+  padding: 1%;
+  border-radius: 3px;
+}
+
+.main-content__to-do-list,
+.main-content__completed-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-project {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.add-project__input {
+  background-color: aquamarine;
+  border: none;
+  border-bottom: 1px solid #000;
+}
+
+.add-project_add-button {
+  background-color: blanchedalmond;
+
+  padding: 1% 10%;
+  border-radius: 3px;
+  text-align: center;
+}
+
+.completed-list__todo-item {
+  text-decoration: line-through;
+  color: #000;
+}

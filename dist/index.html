@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap"
+      rel="stylesheet"
+    />
+    <script src="main.js" defer></script>
+    <meta charset="utf-8" />
+    <title>To Do List</title>
+  </head>
+  <body>
+    <div class="to-do-list-app">
+      <!--<div class="to-do-list-app__project-sidebar">
+         <div class="folder">
+          <span class="folder__name">inbox</span>
+          <span class="folder__amount">2</span>
+        </div>
+        <div class="folder">
+          <span class="folder__name">due today</span>
+          <span class="folder__amount">2</span>
+        </div>
+        <div class="folder">
+          <span class="folder__name">due tomorrow</span>
+          <span class="folder__amount">2</span>
+        </div> 
+        <div data-name="usr-gen-folders"></div>
+        <div class="add-project">
+          <input
+            class="add-project__input"
+            type="text"
+            placeholder="create a new project"
+          />
+          <span class="add-project_add-button">add</span>
+        </div>
+      </div>-->
+      <div class="to-do-list-app__main-content">
+        <h1 class="main-content__header">
+          Inbox <span data-type="total-to-dos"></span>
+        </h1>
+        <input
+          class="main-content__add-todo"
+          type="text"
+          placeholder="write your task here and press enter to add to list"
+        />
+        <div class="main-content__to-do-list"></div>
+        <div class="main-content__completed-list">
+          <p>completed</p>
+          <div class="completed"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
