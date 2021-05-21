@@ -35,6 +35,7 @@ function createToDo(e) {
     newToDo.name = toDoName;
     newToDo.dueDate = dueDate.value;
     addToList(newToDo);
+    checkDueDate();
     clearInputs(taskName);
     clearInputs(dueDate);
   }
@@ -56,30 +57,18 @@ function completeToDo(e) {
   completedArray.push(completedToDo[0]);
   renderToDoList(toDoListArray);
   renderCompletedList(completedArray);
-  return toDoListArray;
 }
 
 function checkDueDate() {
-  const date = new Date();
-  const day = ('0' + date.getDate()).slice(-2);
-  const month = `0${date.getMonth() + 1}`.slice(-2);
-  const today = `${date.getFullYear()}-${month}-${day}`;
+  const today = new Date();
 
-  const overdue = toDoListArray
-    .map((item) => item.dueDate)
-    .filter((item) => item !== '')
-    .filter((item) => item !== today);
-
-  console.log(overdue);
-  markOverdue(overdue);
-  /* dueDate.split('-').join('');
-  const date = new Date();
-  const day = ('0' + date.getDate()).slice(-2);
-  const month = `0${date.getMonth() + 1}`.slice(-2);
-  const today = `${date.getFullYear()}${month}${day}`;
-
-  if (dueDate !== today) {
-    markOverdue(dueDate);
-  } */
+  for (let i = 0; i < toDoListArray.length; i++) {
+    if (new Date(toDoListArray[i].dueDate) < today) {
+      toDoListArray[i].overdue = true;
+    } else {
+      toDoListArray[i].overdue = false;
+    }
+  }
+  renderToDoList(toDoListArray);
 }
 export { toDoListArray, createToDo, addToList, completeToDo, checkDueDate };

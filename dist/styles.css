@@ -1,13 +1,9 @@
-/* input[type='date']:before {
-  content: attr(placeholder) !important;
-  color: #aaa;
-  margin-right: 0.5em;
+.overdue {
+  color: tomato !important;
 }
-input[type='date']:focus:before,
-input[type='date']:valid:before {
-  content: '';
-} */
-
+.overdue::before {
+  content: 'overdue';
+}
 .main-content__to-do-list {
   height: 100px;
 }
