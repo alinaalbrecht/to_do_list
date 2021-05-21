@@ -40,14 +40,19 @@
         <h1 class="main-content__header">
           Inbox <span data-type="total-to-dos"></span>
         </h1>
-        <input
-          class="main-content__add-todo"
-          type="text"
-          placeholder="write your task here and press enter to add to list"
-        />
+        <div class="main-content__add-todo" tabindex="1">
+          <input
+            class="add-todo__task-name"
+            type="text"
+            placeholder="write your task here and press enter to add to list"
+          />
+          <input class="add-todo__due-date" type="date" name="date" />
+          <!-- DROPDOWN PRIORITY PICKER <div></div> -->
+        </div>
+
         <div class="main-content__to-do-list"></div>
         <div class="main-content__completed-list">
-          <p>completed</p>
+          <p class="completed-list__title hidden">completed</p>
           <div class="completed"></div>
         </div>
       </div>
