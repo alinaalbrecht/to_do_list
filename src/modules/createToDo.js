@@ -7,49 +7,48 @@ import {
 } from './renderToDos';
 
 class ToDoItem {
-  constructor(name /* uniqueId */) {
+  constructor(name, dueDate) {
     this.name = name;
     this.finished = false;
     /*   this.uniqueId = uniqueId; */
-    /*     this.amount = amount;
-      this.dueDate = dueDate;
-      this.priority = priority;
-      this.delete = "&#10007; remove"; */
+    /* this.amount = amount; */
+    this.dueDate = dueDate;
+    /* this.priority = priority; */
+    /* this.delete = "&#10007; remove"; */
   }
 }
 const toDoListArray = [];
 const completedArray = [];
+let taskName = document.querySelector('.add-todo__task-name');
+taskName.addEventListener('keypress', createToDo);
+
 let toDoInput = document.querySelector('.main-content__add-todo');
 toDoInput.addEventListener('keypress', createToDo);
+
 function createToDo(e) {
-  let toDoName = toDoInput.value;
+  /* console.log(toDoInput); */
+  let toDoName = taskName.value;
+  let dueDate = document.querySelector('.add-todo__due-date');
+  console.log(dueDate.value);
   if (e.key === 'Enter' && toDoName !== '') {
-    /*     console.log(e.key); */
     let newToDo = new ToDoItem();
     newToDo.name = toDoName;
-    /*  newToDo.uniqueId = toDoListArray.length; */
+    newToDo.dueDate = dueDate.value;
     addToList(newToDo);
-    clearInputs(toDoInput);
-    /*     console.log(toDoName); */
+    clearInputs(taskName);
+    clearInputs(dueDate);
   }
 }
 
 function addToList(item) {
   toDoListArray.push(item);
-  /*  console.log(toDoListArray); */
   renderToDoList(toDoListArray);
   totalToDos(toDoListArray);
 }
-let activeCheckboxes = [...document.querySelectorAll('.todo-item__checkbox')];
-activeCheckboxes.forEach((box) =>
-  box.addEventListener('change', (/* completeToDo */) => console.log('check'))
-);
-
-let eventTest = document.querySelector('.main-content__to-do-list');
-eventTest.addEventListener('click', completeToDo);
+let activeCheckboxes = document.querySelector('.main-content__to-do-list');
+activeCheckboxes.addEventListener('click', completeToDo);
 
 function completeToDo(e) {
-  console.log(e);
   if (e.target.type !== 'checkbox') return;
   // eslint-disable-next-line radix
   let index = parseInt(e.target.dataset.index);
@@ -59,4 +58,28 @@ function completeToDo(e) {
   renderCompletedList(completedArray);
   return toDoListArray;
 }
-export { toDoListArray, createToDo, addToList, completeToDo, activeCheckboxes };
+
+function checkDueDate() {
+  const date = new Date();
+  const day = ('0' + date.getDate()).slice(-2);
+  const month = `0${date.getMonth() + 1}`.slice(-2);
+  const today = `${date.getFullYear()}-${month}-${day}`;
+
+  const overdue = toDoListArray
+    .map((item) => item.dueDate)
+    .filter((item) => item !== '')
+    .filter((item) => item !== today);
+
+  console.log(overdue);
+  markOverdue(overdue);
+  /* dueDate.split('-').join('');
+  const date = new Date();
+  const day = ('0' + date.getDate()).slice(-2);
+  const month = `0${date.getMonth() + 1}`.slice(-2);
+  const today = `${date.getFullYear()}${month}${day}`;
+
+  if (dueDate !== today) {
+    markOverdue(dueDate);
+  } */
+}
+export { toDoListArray, createToDo, addToList, completeToDo, checkDueDate };

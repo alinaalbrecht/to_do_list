@@ -4,6 +4,7 @@ import {
   addToList,
   completeToDo,
   activeCheckboxes,
+  checkDueDate,
 } from './modules/createToDo';
 import {
   renderToDoList,

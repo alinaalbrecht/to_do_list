@@ -1,4 +1,12 @@
-/* test */
+/* input[type='date']:before {
+  content: attr(placeholder) !important;
+  color: #aaa;
+  margin-right: 0.5em;
+}
+input[type='date']:focus:before,
+input[type='date']:valid:before {
+  content: '';
+} */
 
 .main-content__to-do-list {
   height: 100px;
@@ -44,6 +52,21 @@ body {
   border-radius: 3px;
 }
 
+.add-todo__due-date,
+.add-todo__task-name {
+  background-color: #e1e1e1;
+  border: none;
+}
+
+.add-todo__task-name {
+  width: 80%;
+}
+
+.add-todo__due-date:focus,
+.add-todo__task-name:focus,
+.todo-item__due-date:focus {
+  outline: none;
+}
 .main-content__to-do-list,
 .main-content__completed-list {
   display: flex;
@@ -73,4 +96,10 @@ body {
 .completed-list__todo-item {
   text-decoration: line-through;
   color: #000;
+}
+
+.todo-item__due-date {
+  background-color: #fff;
+  color: rgb(74, 108, 202);
+  border: none;
 }

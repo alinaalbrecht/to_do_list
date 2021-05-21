@@ -4,6 +4,7 @@ import {
   createToDo,
   addToList,
   completeToDo,
+  checkDueDate,
 } from './createToDo';
 
 function clearInputs(input) {
@@ -25,14 +26,23 @@ function renderToDoList(listArray) {
         value="${item.name}"
       />
       <label class="todo-item__name" for="${item.name}">${item.name}</label>
-    </div>
+      <input class="todo-item__due-date" type="date" value="${
+        item.dueDate
+      }" name="date" />
+      </div>
           `
   );
   toDoList.innerHTML = toDoListMarkup.join('');
+  checkDueDate();
 }
 
 function renderCompletedList(listArray) {
+  console.log('trigger');
   let completedList = document.querySelector('.completed');
+  let title = document.querySelector('.completed-list__title');
+  if (title.classList.contains('hidden')) {
+    title.classList.remove('hidden');
+  }
   let counter = 0;
   const completedListMarkup = listArray.map(
     (item) => `
