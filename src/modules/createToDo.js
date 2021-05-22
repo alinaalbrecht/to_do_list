@@ -29,7 +29,7 @@ function createToDo(e) {
   /* console.log(toDoInput); */
   let toDoName = taskName.value;
   let dueDate = document.querySelector('.add-todo__due-date');
-  console.log(dueDate.value);
+  /*   console.log(dueDate.value); */
   if (e.key === 'Enter' && toDoName !== '') {
     let newToDo = new ToDoItem();
     newToDo.name = toDoName;
@@ -60,10 +60,16 @@ function completeToDo(e) {
 }
 
 function checkDueDate() {
-  const today = new Date();
+  const date = new Date();
+
+  const today = `${date.getFullYear()}${date.getMonth()}${date.getDate()}`;
 
   for (let i = 0; i < toDoListArray.length; i++) {
-    if (new Date(toDoListArray[i].dueDate) < today) {
+    const dueDate = new Date(toDoListArray[i].dueDate);
+    if (
+      `${dueDate.getFullYear()}${dueDate.getMonth()}${dueDate.getDate()}` <
+      today
+    ) {
       toDoListArray[i].overdue = true;
     } else {
       toDoListArray[i].overdue = false;

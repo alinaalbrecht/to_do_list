@@ -51,7 +51,6 @@ function renderToDoList(listArray) {
 }
 
 function renderCompletedList(listArray) {
-  console.log('trigger');
   let completedList = document.querySelector('.completed');
   let title = document.querySelector('.completed-list__title');
   if (title.classList.contains('hidden')) {
