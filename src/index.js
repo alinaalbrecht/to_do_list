@@ -6,6 +6,7 @@ import {
   activeCheckboxes,
   checkDueDate,
   saveToDoList,
+  saveCompletedList,
 } from './modules/createToDo';
 import {
   renderToDoList,

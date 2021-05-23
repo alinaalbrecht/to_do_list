@@ -18,14 +18,17 @@ class ToDoItem {
   }
 }
 
-let toDoListArray = JSON.parse(localStorage.getItem('toDoListArray') || '[]');
+const toDoListArray = JSON.parse(localStorage.getItem('toDoListArray') || '[]');
+
+const completedArray = JSON.parse(
+  localStorage.getItem('completedArray') || '[]'
+);
 
 (function () {
   renderToDoList(toDoListArray);
   totalToDos(toDoListArray);
+  renderCompletedList(completedArray);
 })();
-
-const completedArray = [];
 
 let taskName = document.querySelector('.add-todo__task-name');
 taskName.addEventListener('keypress', createToDo);
@@ -53,6 +56,10 @@ function saveToDoList() {
   localStorage.setItem('toDoListArray', JSON.stringify(toDoListArray));
 }
 
+function saveCompletedList() {
+  localStorage.setItem('completedArray', JSON.stringify(completedArray));
+}
+
 function addToList(item) {
   toDoListArray.push(item);
   saveToDoList();
@@ -67,9 +74,14 @@ function completeToDo(e) {
   // eslint-disable-next-line radix
   let index = parseInt(e.target.dataset.index);
   let completedToDo = toDoListArray.splice(index, 1);
-  completedArray.push(completedToDo[0]);
+  completedToDo = completedToDo[0];
+  console.log(completedToDo);
+  completedArray.push(completedToDo);
   renderToDoList(toDoListArray);
+  totalToDos(toDoListArray);
   renderCompletedList(completedArray);
+  saveToDoList();
+  saveCompletedList();
 }
 
 function checkDueDate() {
@@ -97,4 +109,5 @@ export {
   completeToDo,
   checkDueDate,
   saveToDoList,
+  saveCompletedList,
 };
