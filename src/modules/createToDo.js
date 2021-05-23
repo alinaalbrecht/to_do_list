@@ -9,6 +9,7 @@ import {
 class ToDoItem {
   constructor(name, dueDate) {
     this.name = name;
+
     /*   this.uniqueId = uniqueId; */
     /* this.amount = amount; */
     this.dueDate = dueDate;
@@ -27,6 +28,7 @@ const completedArray = JSON.parse(
   renderToDoList(toDoListArray);
   totalToDos(toDoListArray);
   renderCompletedList(completedArray);
+  checkDueDate();
 })();
 
 let taskName = document.querySelector('.add-todo__task-name');
@@ -40,12 +42,10 @@ function createToDo(e) {
   let dueDate = document.querySelector('.add-todo__due-date');
 
   if (e.key === 'Enter' && toDoName !== '') {
-    console.log('createToDo');
     let newToDo = new ToDoItem();
     newToDo.name = toDoName;
     newToDo.dueDate = dueDate.value;
-    addToList(newToDo, toDoListArray);
-    checkDueDate();
+    updateToDoList(newToDo);
     clearInputs(taskName);
     clearInputs(dueDate);
   }
@@ -59,11 +59,19 @@ function saveCompletedList() {
   localStorage.setItem('completedArray', JSON.stringify(completedArray));
 }
 
-function addToList(item, listArray) {
-  listArray.push(item);
-  renderToDoList(listArray);
-  renderCompletedList(listArray);
-  totalToDos(listArray);
+function updateToDoList(item) {
+  toDoListArray.push(item);
+  checkDueDate();
+  totalToDos(toDoListArray);
+  renderToDoList(toDoListArray);
+  saveToDoList();
+}
+
+function updateCompleteList(item) {
+  completedArray.push(item);
+  renderToDoList(toDoListArray);
+  totalToDos(toDoListArray);
+  renderCompletedList(completedArray);
   saveToDoList();
   saveCompletedList();
 }
@@ -78,23 +86,24 @@ function completeToDo(e) {
   let completedToDo = toDoListArray.splice(index, 1);
   completedToDo = completedToDo[0];
   console.log(completedToDo);
-  addToList(completedToDo, completedArray);
+  updateCompleteList(completedToDo);
 }
 
 function checkDueDate() {
   const date = new Date();
-
-  const today = `${date.getFullYear()}${date.getMonth()}${date.getDate()}`;
+  const today = date.getFullYear() + date.getMonth() + date.getDate();
 
   for (let i = 0; i < toDoListArray.length; i++) {
     const dueDate = new Date(toDoListArray[i].dueDate);
-    if (
-      `${dueDate.getFullYear()}${dueDate.getMonth()}${dueDate.getDate()}` <
-      today
-    ) {
+
+    const compareDueDate =
+      dueDate.getFullYear() + dueDate.getMonth() + dueDate.getDate();
+    if (compareDueDate < today) {
       toDoListArray[i].overdue = true;
-    } else {
+    } else if (compareDueDate > today) {
       toDoListArray[i].overdue = false;
+    } else {
+      console.log('none of the above');
     }
   }
   renderToDoList(toDoListArray);
@@ -102,7 +111,8 @@ function checkDueDate() {
 export {
   toDoListArray,
   createToDo,
-  addToList,
+  updateToDoList,
+  updateCompleteList,
   completeToDo,
   checkDueDate,
   saveToDoList,

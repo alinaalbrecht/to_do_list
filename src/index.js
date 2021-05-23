@@ -1,12 +1,14 @@
 import {
   toDoListArray,
   createToDo,
-  addToList,
+  updateToDoList,
+  updateCompleteList,
   completeToDo,
   activeCheckboxes,
   checkDueDate,
   saveToDoList,
   saveCompletedList,
+  changeDueDate,
 } from './modules/createToDo';
 import {
   renderToDoList,

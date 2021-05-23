@@ -2,7 +2,7 @@
 import {
   toDoListArray,
   createToDo,
-  addToList,
+  updateToDoList,
   completeToDo,
   checkDueDate,
   saveToDoList,
