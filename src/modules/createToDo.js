@@ -9,7 +9,6 @@ import {
 class ToDoItem {
   constructor(name, dueDate) {
     this.name = name;
-    this.finished = false;
     /*   this.uniqueId = uniqueId; */
     /* this.amount = amount; */
     this.dueDate = dueDate;
@@ -45,7 +44,7 @@ function createToDo(e) {
     let newToDo = new ToDoItem();
     newToDo.name = toDoName;
     newToDo.dueDate = dueDate.value;
-    addToList(newToDo);
+    addToList(newToDo, toDoListArray);
     checkDueDate();
     clearInputs(taskName);
     clearInputs(dueDate);
@@ -60,12 +59,15 @@ function saveCompletedList() {
   localStorage.setItem('completedArray', JSON.stringify(completedArray));
 }
 
-function addToList(item) {
-  toDoListArray.push(item);
+function addToList(item, listArray) {
+  listArray.push(item);
+  renderToDoList(listArray);
+  renderCompletedList(listArray);
+  totalToDos(listArray);
   saveToDoList();
-  renderToDoList(toDoListArray);
-  totalToDos(toDoListArray);
+  saveCompletedList();
 }
+
 let activeCheckboxes = document.querySelector('.main-content__to-do-list');
 activeCheckboxes.addEventListener('click', completeToDo);
 
@@ -76,12 +78,7 @@ function completeToDo(e) {
   let completedToDo = toDoListArray.splice(index, 1);
   completedToDo = completedToDo[0];
   console.log(completedToDo);
-  completedArray.push(completedToDo);
-  renderToDoList(toDoListArray);
-  totalToDos(toDoListArray);
-  renderCompletedList(completedArray);
-  saveToDoList();
-  saveCompletedList();
+  addToList(completedToDo, completedArray);
 }
 
 function checkDueDate() {
