@@ -5,6 +5,7 @@ import {
   addToList,
   completeToDo,
   checkDueDate,
+  saveToDoList,
 } from './createToDo';
 
 function clearInputs(input) {
@@ -12,6 +13,7 @@ function clearInputs(input) {
 }
 
 function renderToDoList(listArray) {
+  console.log('renderToDoList');
   let toDoList = document.querySelector('.main-content__to-do-list');
 
   const toDoListMarkup = [];

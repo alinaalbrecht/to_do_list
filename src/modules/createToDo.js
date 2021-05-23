@@ -17,8 +17,16 @@ class ToDoItem {
     /* this.delete = "&#10007; remove"; */
   }
 }
-const toDoListArray = [];
+
+let toDoListArray = JSON.parse(localStorage.getItem('toDoListArray') || '[]');
+
+(function () {
+  renderToDoList(toDoListArray);
+  totalToDos(toDoListArray);
+})();
+
 const completedArray = [];
+
 let taskName = document.querySelector('.add-todo__task-name');
 taskName.addEventListener('keypress', createToDo);
 
@@ -26,11 +34,11 @@ let toDoInput = document.querySelector('.main-content__add-todo');
 toDoInput.addEventListener('keypress', createToDo);
 
 function createToDo(e) {
-  /* console.log(toDoInput); */
   let toDoName = taskName.value;
   let dueDate = document.querySelector('.add-todo__due-date');
-  /*   console.log(dueDate.value); */
+
   if (e.key === 'Enter' && toDoName !== '') {
+    console.log('createToDo');
     let newToDo = new ToDoItem();
     newToDo.name = toDoName;
     newToDo.dueDate = dueDate.value;
@@ -41,8 +49,13 @@ function createToDo(e) {
   }
 }
 
+function saveToDoList() {
+  localStorage.setItem('toDoListArray', JSON.stringify(toDoListArray));
+}
+
 function addToList(item) {
   toDoListArray.push(item);
+  saveToDoList();
   renderToDoList(toDoListArray);
   totalToDos(toDoListArray);
 }
@@ -77,4 +90,11 @@ function checkDueDate() {
   }
   renderToDoList(toDoListArray);
 }
-export { toDoListArray, createToDo, addToList, completeToDo, checkDueDate };
+export {
+  toDoListArray,
+  createToDo,
+  addToList,
+  completeToDo,
+  checkDueDate,
+  saveToDoList,
+};
