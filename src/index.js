@@ -15,4 +15,9 @@ import {
   clearInputs,
   renderCompletedList,
   renderSavedToDoList,
+  toggleDatePicker,
+  getNewDateValue,
+  removeDatePicker,
 } from './modules/renderToDos';
+
+console.log('hello');

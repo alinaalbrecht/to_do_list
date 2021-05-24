@@ -44,7 +44,12 @@ function createToDo(e) {
   if (e.key === 'Enter' && toDoName !== '') {
     let newToDo = new ToDoItem();
     newToDo.name = toDoName;
-    newToDo.dueDate = dueDate.value;
+    if (dueDate.value !== '') {
+      newToDo.dueDate = dueDate.value;
+    } else {
+      newToDo.dueDate = 'no due date';
+    }
+
     updateToDoList(newToDo);
     clearInputs(taskName);
     clearInputs(dueDate);
@@ -61,6 +66,7 @@ function saveCompletedList() {
 
 function updateToDoList(item) {
   toDoListArray.push(item);
+  console.log(toDoListArray);
   checkDueDate();
   totalToDos(toDoListArray);
   renderToDoList(toDoListArray);
@@ -85,22 +91,23 @@ function completeToDo(e) {
   let index = parseInt(e.target.dataset.index);
   let completedToDo = toDoListArray.splice(index, 1);
   completedToDo = completedToDo[0];
-  console.log(completedToDo);
+  /*  console.log(completedToDo); */
   updateCompleteList(completedToDo);
 }
 
 function checkDueDate() {
   const date = new Date();
-  const today = date.getFullYear() + date.getMonth() + date.getDate();
+  const today = date.getFullYear() + date.getMonth() * 10 + date.getDate();
 
   for (let i = 0; i < toDoListArray.length; i++) {
     const dueDate = new Date(toDoListArray[i].dueDate);
 
     const compareDueDate =
-      dueDate.getFullYear() + dueDate.getMonth() + dueDate.getDate();
+      dueDate.getFullYear() + dueDate.getMonth() * 10 + dueDate.getDate();
+    /* console.log(compareDueDate); */
     if (compareDueDate < today) {
       toDoListArray[i].overdue = true;
-    } else if (compareDueDate > today) {
+    } else if (compareDueDate >= today || !compareDueDate) {
       toDoListArray[i].overdue = false;
     } else {
       console.log('none of the above');
@@ -108,6 +115,21 @@ function checkDueDate() {
   }
   renderToDoList(toDoListArray);
 }
+
+const newDueDate = document.querySelectorAll('.main-content__to-do-list');
+newDueDate.forEach((picker) =>
+  picker.addEventListener('change', changeDueDate)
+);
+
+function changeDueDate(e) {
+  if (e.target.classList.contains('todo-item__due-date--picker')) {
+    const index = e.target.dataset.index;
+    const value = e.target.value;
+    toDoListArray[index].dueDate = value;
+    /* console.log(e.target); */
+  }
+}
+
 export {
   toDoListArray,
   createToDo,
@@ -117,4 +139,5 @@ export {
   checkDueDate,
   saveToDoList,
   saveCompletedList,
+  changeDueDate,
 };
