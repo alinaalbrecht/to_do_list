@@ -1,9 +1,9 @@
 .overdue {
   color: tomato !important;
 }
-.overdue::before {
+/* .overdue::before {
   content: 'overdue';
-}
+} */
 .main-content__to-do-list {
   height: 100px;
 }
