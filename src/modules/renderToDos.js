@@ -20,12 +20,6 @@ function renderToDoList(listArray) {
   const toDoListMarkup = [];
   /* let formattedList = [...listArray]; */
   for (let i = 0; i < listArray.length; i++) {
-    /*     if (formattedList[i].dueDate !== 'no due date') {
-      formattedList[i].dueDate = formattedList[i].dueDate
-        .split('-')
-        .reverse()
-        .join('.');
-    } */
     console.log(toDoListArray);
     if (listArray[i].overdue === true) {
       toDoListMarkup.push(
@@ -38,8 +32,14 @@ function renderToDoList(listArray) {
           data-index="${i}"
           value="${listArray[i].name}"
         />
-        <label class="todo-item__name" for="${listArray[i].name}">${listArray[i].name}</label>
-        <span class="todo-item__due-date--set-date overdue" data-index="${i}">${listArray[i].dueDate}</span>
+        <label class="todo-item__name" for="${listArray[i].name}">${
+          listArray[i].name
+        }</label>
+        <span class="todo-item__due-date--set-date overdue" data-index="${i}">${
+          listArray[i].dueDate !== 'no due date'
+            ? listArray[i].dueDate.split('-').reverse().join('.')
+            : listArray[i].dueDate
+        }</span>
         <input class="todo-item__due-date--picker hidden" data-index="${i}" type="date" name="date">
   `
       );
@@ -54,8 +54,14 @@ function renderToDoList(listArray) {
           data-index="${i}"
           value="${listArray[i].name}"
         />
-        <label class="todo-item__name" for="${listArray[i].name}">${listArray[i].name}</label>
-        <span class="todo-item__due-date--set-date" data-index="${i}">${listArray[i].dueDate}</span>
+        <label class="todo-item__name" for="${listArray[i].name}">${
+          listArray[i].name
+        }</label>
+        <span class="todo-item__due-date--set-date" data-index="${i}">${
+          listArray[i].dueDate !== 'no due date'
+            ? listArray[i].dueDate.split('-').reverse().join('.')
+            : listArray[i].dueDate
+        }</span>
         <input class="todo-item__due-date--picker hidden" data-index="${i}" type="date" name="date">
         </div>`
       );

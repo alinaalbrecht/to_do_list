@@ -97,13 +97,13 @@ function completeToDo(e) {
 
 function checkDueDate() {
   const date = new Date();
-  const today = date.getFullYear() + date.getMonth() * 10 + date.getDate();
+  const today = date.getFullYear() + date.getMonth() * 100 + date.getDate();
 
   for (let i = 0; i < toDoListArray.length; i++) {
     const dueDate = new Date(toDoListArray[i].dueDate);
 
     const compareDueDate =
-      dueDate.getFullYear() + dueDate.getMonth() * 10 + dueDate.getDate();
+      dueDate.getFullYear() + dueDate.getMonth() * 100 + dueDate.getDate();
     /* console.log(compareDueDate); */
     if (compareDueDate < today) {
       toDoListArray[i].overdue = true;
