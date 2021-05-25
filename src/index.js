@@ -19,5 +19,3 @@ import {
   getNewDateValue,
   removeDatePicker,
 } from './modules/renderToDos';
-
-console.log('hello');

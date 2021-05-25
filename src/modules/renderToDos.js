@@ -10,17 +10,15 @@ import {
 } from './createToDo';
 
 function clearInputs(input) {
-  return (input.value = '');
+  input.value = '';
 }
 
 function renderToDoList(listArray) {
-  /* console.log('renderToDoList'); */
   let toDoList = document.querySelector('.main-content__to-do-list');
 
   const toDoListMarkup = [];
-  /* let formattedList = [...listArray]; */
+
   for (let i = 0; i < listArray.length; i++) {
-    console.log(toDoListArray);
     if (listArray[i].overdue === true) {
       toDoListMarkup.push(
         `<div class="to-do-list__todo-item data-index="${i}"">
@@ -102,9 +100,6 @@ function removeDatePicker(e) {
 function renderCompletedList(listArray) {
   let completedList = document.querySelector('.completed');
   let title = document.querySelector('.completed-list__title');
-  if (title.classList.contains('hidden')) {
-    title.classList.remove('hidden');
-  }
   let counter = 0;
   const completedListMarkup = listArray.map(
     (item) => `
@@ -125,7 +120,14 @@ function renderCompletedList(listArray) {
     </div>
           `
   );
+
   completedList.innerHTML = completedListMarkup.join('');
+  if (
+    [...completedList.children].length > 0 &&
+    title.classList.contains('hidden')
+  ) {
+    title.classList.remove('hidden');
+  }
 }
 
 function totalToDos(listArray) {

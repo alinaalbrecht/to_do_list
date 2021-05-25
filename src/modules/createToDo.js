@@ -66,7 +66,6 @@ function saveCompletedList() {
 
 function updateToDoList(item) {
   toDoListArray.push(item);
-  console.log(toDoListArray);
   checkDueDate();
   totalToDos(toDoListArray);
   renderToDoList(toDoListArray);
@@ -91,7 +90,7 @@ function completeToDo(e) {
   let index = parseInt(e.target.dataset.index);
   let completedToDo = toDoListArray.splice(index, 1);
   completedToDo = completedToDo[0];
-  /*  console.log(completedToDo); */
+
   updateCompleteList(completedToDo);
 }
 
@@ -104,7 +103,7 @@ function checkDueDate() {
 
     const compareDueDate =
       dueDate.getFullYear() + dueDate.getMonth() * 100 + dueDate.getDate();
-    /* console.log(compareDueDate); */
+
     if (compareDueDate < today) {
       toDoListArray[i].overdue = true;
     } else if (compareDueDate >= today || !compareDueDate) {
@@ -126,7 +125,6 @@ function changeDueDate(e) {
     const index = e.target.dataset.index;
     const value = e.target.value;
     toDoListArray[index].dueDate = value;
-    /* console.log(e.target); */
   }
 }
 
