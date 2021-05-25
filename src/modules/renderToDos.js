@@ -105,18 +105,7 @@ function renderCompletedList(listArray) {
     (item) => `
       
       <div class="completed-list__todo-item">
-      <input
-        class="todo-item__checkbox"
-        type="checkbox"
-        disabled="disabled"
-        id="${item.name}"
-        name="checkbox"
-        data-index="${counter++}"
-        value="${item.name}"
-      />
-      <label class="completed-list__name" for="${item.name}">${
-      item.name
-    }</label>
+      <p class="completed-list__name">${item.name}</p>
     </div>
           `
   );
