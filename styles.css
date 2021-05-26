@@ -9,6 +9,7 @@
 * {
   box-sizing: border-box;
   font-family: 'Quicksand', sans-serif;
+  margin: 0;
 }
 .hidden {
   display: none;
@@ -38,6 +39,7 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin: 2% 0;
 }
 .main-content__header h1 {
   margin-right: 1%;
@@ -93,9 +95,14 @@ body {
   text-align: center;
 }
 
+.completed-list__todo-item,
+.to-do-list__todo-item {
+  margin: 4px 0;
+}
+
 .completed-list__todo-item {
   text-decoration: line-through;
-  color: #000;
+  color: #6c6c6c;
 }
 
 .not-overdue {
@@ -109,12 +116,30 @@ body {
 
 .todo-item__due-date--picker {
   border: none;
+  margin-left: 20px;
 }
 
 .completed-list__title {
   margin: 1% 0;
+  /*   font-size: 18px;
+  font-weight: bold; */
+  color: #6c6c6c;
 }
 
 .fa-check {
-  color: chartreuse;
+  color: #98d060;
+}
+
+.todo-item__checkbox {
+  width: 15px;
+  height: 15px;
+  border: 1px solid #000;
+  border-radius: 3px;
+  margin-right: 1%;
+}
+
+.to-do-list__todo-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
