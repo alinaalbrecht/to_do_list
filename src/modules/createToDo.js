@@ -85,7 +85,7 @@ let activeCheckboxes = document.querySelector('.main-content__to-do-list');
 activeCheckboxes.addEventListener('click', completeToDo);
 
 function completeToDo(e) {
-  if (e.target.type !== 'checkbox') return;
+  if (!e.target.classList.contains('todo-item__checkbox')) return;
   // eslint-disable-next-line radix
   let index = parseInt(e.target.dataset.index);
   let completedToDo = toDoListArray.splice(index, 1);

@@ -21,45 +21,34 @@ function renderToDoList(listArray) {
   for (let i = 0; i < listArray.length; i++) {
     if (listArray[i].overdue === true) {
       toDoListMarkup.push(
-        `<div class="to-do-list__todo-item data-index="${i}"">
-        <input
-          class="todo-item__checkbox"
-          type="checkbox"
-          id="${listArray[i].name}"
-          name="checkbox"
-          data-index="${i}"
-          value="${listArray[i].name}"
-        />
-        <label class="todo-item__name" for="${listArray[i].name}">${
+        `<div class="to-do-list__todo-item" data-index="${i}">
+
+        <div class="todo-item__checkbox" id="${
           listArray[i].name
-        }</label>
-        <span class="todo-item__due-date--set-date overdue" data-index="${i}">${
+        }" data-index="${i}"></div>
+        <p class="todo-item__name">${listArray[i].name}</p>
+
+        <p class="todo-item__due-date--set-date overdue" data-index="${i}">${
           listArray[i].dueDate !== 'no due date'
             ? listArray[i].dueDate.split('-').reverse().join('.')
             : listArray[i].dueDate
-        }</span>
+        }</p>
         <input class="todo-item__due-date--picker hidden" data-index="${i}" type="date" name="date">
-  `
+        </div>`
       );
     } else {
       toDoListMarkup.push(
-        `<div class="to-do-list__todo-item data-index="${i}"">
-        <input
-          class="todo-item__checkbox"
-          type="checkbox"
-          id="${listArray[i].name}"
-          name="checkbox"
-          data-index="${i}"
-          value="${listArray[i].name}"
-        />
-        <label class="todo-item__name" for="${listArray[i].name}">${
+        `<div class="to-do-list__todo-item" data-index="${i}">
+
+        <div class="todo-item__checkbox" id="${
           listArray[i].name
-        }</label>
-        <span class="todo-item__due-date--set-date not-overdue" data-index="${i}">${
+        }" data-index="${i}"></div>
+        <p class="todo-item__name">${listArray[i].name}</p>
+        <p class="todo-item__due-date--set-date not-overdue" data-index="${i}">${
           listArray[i].dueDate !== 'no due date'
             ? listArray[i].dueDate.split('-').reverse().join('.')
             : listArray[i].dueDate
-        }</span>
+        }</p>
         <input class="todo-item__due-date--picker hidden" data-index="${i}" type="date" name="date">
         </div>`
       );
