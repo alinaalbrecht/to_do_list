@@ -19,3 +19,4 @@ import {
   getNewDateValue,
   removeDatePicker,
 } from './modules/renderToDos';
+import '@fortawesome/fontawesome-free/js/all.js';

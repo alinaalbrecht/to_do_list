@@ -55,7 +55,7 @@ function renderToDoList(listArray) {
         <label class="todo-item__name" for="${listArray[i].name}">${
           listArray[i].name
         }</label>
-        <span class="todo-item__due-date--set-date" data-index="${i}">${
+        <span class="todo-item__due-date--set-date not-overdue" data-index="${i}">${
           listArray[i].dueDate !== 'no due date'
             ? listArray[i].dueDate.split('-').reverse().join('.')
             : listArray[i].dueDate
@@ -103,9 +103,10 @@ function renderCompletedList(listArray) {
   let counter = 0;
   const completedListMarkup = listArray.map(
     (item) => `
-      
       <div class="completed-list__todo-item">
-      <p class="completed-list__name">${item.name}</p>
+      <i class="fas fa-check"></i>
+
+      <span class="completed-list__name">${item.name}</span>
     </div>
           `
   );

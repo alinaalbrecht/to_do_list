@@ -1,11 +1,9 @@
 .overdue {
   color: tomato !important;
 }
-/* .overdue::before {
-  content: 'overdue';
-} */
+
 .main-content__to-do-list {
-  height: 100px;
+  margin: 2% 0;
 }
 
 * {
@@ -35,6 +33,16 @@ body {
 }
 .usr-gen-folders {
 }
+
+.main-content__header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.main-content__header h1 {
+  margin-right: 1%;
+}
+
 .to-do-list-app__main-content {
   width: 80%;
   margin: 0 4%;
@@ -60,13 +68,9 @@ body {
 
 .add-todo__due-date:focus,
 .add-todo__task-name:focus,
-.todo-item__due-date:focus {
+.todo-item__due-date:focus,
+.todo-item__due-date--picker:focus {
   outline: none;
-}
-.main-content__to-do-list,
-.main-content__completed-list {
-  display: flex;
-  flex-direction: column;
 }
 
 .add-project {
@@ -94,8 +98,23 @@ body {
   color: #000;
 }
 
-.todo-item__due-date {
-  background-color: #fff;
+.not-overdue {
   color: rgb(74, 108, 202);
+}
+
+.todo-item__due-date--set-date {
+  font-size: 12px;
+  margin-left: 20px;
+}
+
+.todo-item__due-date--picker {
   border: none;
+}
+
+.completed-list__title {
+  margin: 1% 0;
+}
+
+.fa-check {
+  color: chartreuse;
 }
