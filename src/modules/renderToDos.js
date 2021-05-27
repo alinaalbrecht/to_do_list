@@ -7,6 +7,7 @@ import {
   checkDueDate,
   saveToDoList,
   changeDueDate,
+  folderArray,
 } from './createToDo';
 
 function clearInputs(input) {
@@ -14,7 +15,7 @@ function clearInputs(input) {
 }
 
 function renderToDoList(listArray) {
-  let toDoList = document.querySelector('.main-content__to-do-list');
+  const toDoList = document.querySelector('.main-content__to-do-list');
 
   const toDoListMarkup = [];
 
@@ -57,10 +58,23 @@ function renderToDoList(listArray) {
   toDoList.innerHTML = toDoListMarkup.join('');
 }
 
-let setDates = document.querySelector('.main-content__to-do-list');
+function renderFolderList(listArray) {
+  const folders = document.querySelector('.folder-sidebar__folder-list');
+  const folderListMarkup = [];
+  for (let i = 0; i < listArray.length; i++) {
+    folderListMarkup.push(`
+    <div class="folder" data-index="${i}">
+    <span class="folder__name">${listArray[i]}</span>
+    <span class="folder__amount"></span>
+  </div>`);
+  }
+  folders.innerHTML = folderListMarkup.join('');
+}
+
+const setDates = document.querySelector('.main-content__to-do-list');
 setDates.addEventListener('click', toggleDatePicker);
 
-let datePickers = document.querySelectorAll('.main-content__to-do-list');
+const datePickers = document.querySelectorAll('.main-content__to-do-list');
 datePickers.forEach((picker) =>
   picker.addEventListener('focusout', removeDatePicker)
 );
@@ -87,17 +101,16 @@ function removeDatePicker(e) {
 }
 
 function renderCompletedList(listArray) {
-  let completedList = document.querySelector('.completed');
-  let title = document.querySelector('.completed-list__title');
-  let counter = 0;
+  const completedList = document.querySelector('.completed');
+  const title = document.querySelector('.completed-list__title');
+  /* let counter = 0; */
   const completedListMarkup = listArray.map(
     (item) => `
       <div class="completed-list__todo-item">
       <i class="fas fa-check"></i>
 
       <span class="completed-list__name">${item.name}</span>
-    </div>
-          `
+    </div>`
   );
 
   completedList.innerHTML = completedListMarkup.join('');
@@ -109,8 +122,20 @@ function renderCompletedList(listArray) {
   }
 }
 
+let addButton = document.querySelector('.add-project');
+addButton.addEventListener('click', showFolderInput);
+
+function showFolderInput() {
+  const folders = document.querySelector('.folder-sidebar__folder-list');
+  const folderInputField = document.createElement('input');
+  folderInputField.classList.add('add-folder__input');
+  folderInputField.setAttribute('type', 'text');
+  folderInputField.setAttribute('placeholder', 'create a new project');
+  folders.append(folderInputField);
+}
+
 function totalToDos(listArray) {
-  let total = document.querySelector('[data-type="total-to-dos"]');
+  const total = document.querySelector('[data-type="total-to-dos"]');
   total.textContent = `(${listArray.length})`;
 }
 
@@ -121,4 +146,6 @@ export {
   renderCompletedList,
   toggleDatePicker,
   removeDatePicker,
+  renderFolderList,
+  showFolderInput,
 };

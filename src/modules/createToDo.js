@@ -4,6 +4,8 @@ import {
   clearInputs,
   totalToDos,
   renderCompletedList,
+  renderFolderList,
+  showFolderInput,
 } from './renderToDos';
 
 class ToDoItem {
@@ -18,6 +20,10 @@ class ToDoItem {
   }
 }
 
+const folderArray = JSON.parse(
+  localStorage.getItem('folderArray') || '["inbox"]'
+);
+
 const toDoListArray = JSON.parse(localStorage.getItem('toDoListArray') || '[]');
 
 const completedArray = JSON.parse(
@@ -29,6 +35,7 @@ const completedArray = JSON.parse(
   totalToDos(toDoListArray);
   renderCompletedList(completedArray);
   checkDueDate();
+  renderFolderList(folderArray);
 })();
 
 let taskName = document.querySelector('.add-todo__task-name');
@@ -56,12 +63,28 @@ function createToDo(e) {
   }
 }
 
+let folderInput = document.querySelector('.folder-sidebar__folder-list');
+folderInput.addEventListener('keypress', addFolder);
+function addFolder(e) {
+  if (!e.target.classList.contains('add-folder__input')) return;
+  if (e.key === 'Enter' && e.target.value !== '') {
+    let folderName = e.target.value;
+    folderArray.push(folderName);
+    saveFolderList();
+    renderFolderList(folderArray);
+  }
+}
+
 function saveToDoList() {
   localStorage.setItem('toDoListArray', JSON.stringify(toDoListArray));
 }
 
 function saveCompletedList() {
   localStorage.setItem('completedArray', JSON.stringify(completedArray));
+}
+
+function saveFolderList() {
+  localStorage.setItem('folderArray', JSON.stringify(folderArray));
 }
 
 function updateToDoList(item) {
@@ -130,6 +153,7 @@ function changeDueDate(e) {
 
 export {
   toDoListArray,
+  folderArray,
   createToDo,
   updateToDoList,
   updateCompleteList,
@@ -138,4 +162,5 @@ export {
   saveToDoList,
   saveCompletedList,
   changeDueDate,
+  addFolder,
 };
