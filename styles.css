@@ -26,8 +26,8 @@ body {
   flex-direction: row;
   flex-wrap: nowrap;
 }
-.to-do-list-app__project-sidebar {
-  background-color: aquamarine;
+.to-do-list-app__folder-sidebar {
+  background-color: rgb(177, 233, 214);
   width: 20%;
   height: 100vh;
   padding: 2%;
@@ -71,18 +71,20 @@ body {
 .add-todo__due-date:focus,
 .add-todo__task-name:focus,
 .todo-item__due-date:focus,
-.todo-item__due-date--picker:focus {
+.todo-item__due-date--picker:focus,
+.add-folder__input:focus {
   outline: none;
 }
 
 .add-project {
   margin-top: 40px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
 }
 
-.add-project__input {
-  background-color: aquamarine;
+.add-folder__input {
+  background-color: rgb(177, 233, 214);
   border: none;
   border-bottom: 1px solid #000;
 }
