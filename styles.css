@@ -30,9 +30,16 @@ body {
   background-color: rgb(177, 233, 214);
   width: 20%;
   height: 100vh;
-  padding: 2%;
+  padding: 1%;
 }
-.usr-gen-folders {
+
+.folder {
+  padding: 5px 0 5px 30px;
+  border-radius: 4px;
+}
+
+.folder--active {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .main-content__header {
