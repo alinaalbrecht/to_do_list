@@ -8,6 +8,7 @@ import {
   saveToDoList,
   changeDueDate,
   folderArray,
+  activateFolder,
 } from './createToDo';
 
 function clearInputs(input) {
@@ -64,11 +65,21 @@ function renderFolderList(listArray) {
   for (let i = 0; i < listArray.length; i++) {
     folderListMarkup.push(`
     <div class="folder" data-index="${i}">
-    <span class="folder__name">${listArray[i]}</span>
+    <span class="folder__name" data-index="${i}">${listArray[i]}</span>
     <span class="folder__amount"></span>
   </div>`);
   }
   folders.innerHTML = folderListMarkup.join('');
+}
+
+function renderFolderStyling(folder, target) {
+  const folderTitle = document.querySelector('.folder-title');
+  folderTitle.textContent = folder;
+
+  const folders = [...document.querySelectorAll('.folder')];
+  folders.forEach((item) => item.classList.remove('folder--active'));
+  target.parentElement.classList.add('folder--active');
+  console.log(target.parentElement);
 }
 
 const setDates = document.querySelector('.main-content__to-do-list');
@@ -148,4 +159,5 @@ export {
   removeDatePicker,
   renderFolderList,
   showFolderInput,
+  renderFolderStyling,
 };

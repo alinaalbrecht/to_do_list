@@ -6,12 +6,15 @@ import {
   renderCompletedList,
   renderFolderList,
   showFolderInput,
+  renderFolderStyling,
 } from './renderToDos';
 
-class ToDoItem {
-  constructor(name, dueDate) {
-    this.name = name;
+let currentFolder = 'inbox';
 
+class ToDoItem {
+  constructor(name, folder, dueDate) {
+    this.name = name;
+    this.folder = folder;
     /*   this.uniqueId = uniqueId; */
     /* this.amount = amount; */
     this.dueDate = dueDate;
@@ -45,12 +48,14 @@ let toDoInput = document.querySelector('.main-content__add-todo');
 toDoInput.addEventListener('keypress', createToDo);
 
 function createToDo(e) {
+  console.log(currentFolder);
   let toDoName = taskName.value;
   let dueDate = document.querySelector('.add-todo__due-date');
 
   if (e.key === 'Enter' && toDoName !== '') {
     let newToDo = new ToDoItem();
     newToDo.name = toDoName;
+    newToDo.folder = currentFolder;
     if (dueDate.value !== '') {
       newToDo.dueDate = dueDate.value;
     } else {
@@ -75,6 +80,18 @@ function addFolder(e) {
   }
 }
 
+const folders = document.querySelector('.folder-sidebar__folder-list');
+folders.addEventListener('click', activateFolder);
+
+function activateFolder(e) {
+  if (!e.target.classList.contains('folder__name')) return;
+  let index = e.target.dataset.index;
+  let target = e.target;
+  currentFolder = folderArray[index];
+  console.log(currentFolder);
+  renderFolderStyling(currentFolder, target);
+}
+
 function saveToDoList() {
   localStorage.setItem('toDoListArray', JSON.stringify(toDoListArray));
 }
@@ -93,6 +110,7 @@ function updateToDoList(item) {
   totalToDos(toDoListArray);
   renderToDoList(toDoListArray);
   saveToDoList();
+  console.log(toDoListArray);
 }
 
 function updateCompleteList(item) {
@@ -163,4 +181,5 @@ export {
   saveCompletedList,
   changeDueDate,
   addFolder,
+  activateFolder,
 };
