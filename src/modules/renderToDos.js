@@ -19,9 +19,7 @@ function clearInputs(input) {
 function renderToDoList(listArray, folder) {
   const toDoList = document.querySelector('.main-content__to-do-list');
   const folderToDoList = listArray.filter((item) => item.folder === folder);
-  console.log(folder);
-  console.log(listArray);
-  console.log(folderToDoList);
+  totalToDos(folderToDoList);
   const toDoListMarkup = [];
 
   for (let i = 0; i < folderToDoList.length; i++) {
@@ -83,7 +81,6 @@ function renderFolderStyling(folder, target) {
   const folders = [...document.querySelectorAll('.folder')];
   folders.forEach((item) => item.classList.remove('folder--active'));
   target.parentElement.classList.add('folder--active');
-  /* console.log(target.parentElement); */
 }
 
 const setDates = document.querySelector('.main-content__to-do-list');
@@ -115,11 +112,13 @@ function removeDatePicker(e) {
   }
 }
 
-function renderCompletedList(listArray) {
+function renderCompletedList(listArray, folder) {
   const completedList = document.querySelector('.completed');
+  const folderCompletedList = listArray.filter(
+    (item) => item.folder === folder
+  );
   const title = document.querySelector('.completed-list__title');
-  /* let counter = 0; */
-  const completedListMarkup = listArray.map(
+  const completedListMarkup = folderCompletedList.map(
     (item) => `
       <div class="completed-list__todo-item">
       <i class="fas fa-check"></i>
@@ -129,10 +128,7 @@ function renderCompletedList(listArray) {
   );
 
   completedList.innerHTML = completedListMarkup.join('');
-  if (
-    [...completedList.children].length > 0 &&
-    title.classList.contains('hidden')
-  ) {
+  if (folderCompletedList.length > 0 && title.classList.contains('hidden')) {
     title.classList.remove('hidden');
   }
 }

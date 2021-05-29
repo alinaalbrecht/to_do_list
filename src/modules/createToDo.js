@@ -12,11 +12,10 @@ import {
 let currentFolder = 'inbox';
 
 class ToDoItem {
-  constructor(name, folder, dueDate) {
+  constructor(name, folder, id, dueDate) {
     this.name = name;
     this.folder = folder;
-    /*   this.uniqueId = uniqueId; */
-    /* this.amount = amount; */
+    this.id = id;
     this.dueDate = dueDate;
     /* this.priority = priority; */
     /* this.delete = "&#10007; remove"; */
@@ -27,7 +26,7 @@ const folderArray = JSON.parse(
   localStorage.getItem('folderArray') || '["inbox"]'
 );
 
-const toDoListArray = JSON.parse(localStorage.getItem('toDoListArray') || '[]');
+let toDoListArray = JSON.parse(localStorage.getItem('toDoListArray') || '[]');
 
 const completedArray = JSON.parse(
   localStorage.getItem('completedArray') || '[]'
@@ -35,10 +34,11 @@ const completedArray = JSON.parse(
 
 (function () {
   renderToDoList(toDoListArray, currentFolder);
-  totalToDos(toDoListArray);
-  renderCompletedList(completedArray);
+  renderCompletedList(completedArray, currentFolder);
   checkDueDate();
   renderFolderList(folderArray);
+  renderFolderStyling(currentFolder, document.querySelector('.folder__name'));
+  /* console.log(toDoListArray); */
 })();
 
 let taskName = document.querySelector('.add-todo__task-name');
@@ -48,7 +48,6 @@ let toDoInput = document.querySelector('.main-content__add-todo');
 toDoInput.addEventListener('keypress', createToDo);
 
 function createToDo(e) {
-  /* console.log(currentFolder); */
   let toDoName = taskName.value;
   let dueDate = document.querySelector('.add-todo__due-date');
 
@@ -56,6 +55,7 @@ function createToDo(e) {
     let newToDo = new ToDoItem();
     newToDo.name = toDoName;
     newToDo.folder = currentFolder;
+
     if (dueDate.value !== '') {
       newToDo.dueDate = dueDate.value;
     } else {
@@ -88,9 +88,9 @@ function activateFolder(e) {
   let index = e.target.dataset.index;
   let target = e.target;
   currentFolder = folderArray[index];
-  /* console.log(currentFolder); */
   renderFolderStyling(currentFolder, target);
   renderToDoList(toDoListArray, currentFolder);
+  renderCompletedList(completedArray, currentFolder);
 }
 
 function saveToDoList() {
@@ -107,18 +107,24 @@ function saveFolderList() {
 
 function updateToDoList(item) {
   toDoListArray.push(item);
+  updateIds();
   checkDueDate();
-  totalToDos(toDoListArray);
+
   renderToDoList(toDoListArray, currentFolder);
   saveToDoList();
-  /* console.log(toDoListArray); */
+}
+
+function updateIds() {
+  for (let i = 0; i < toDoListArray.length; i++) {
+    toDoListArray[i].id = i;
+  }
 }
 
 function updateCompleteList(item) {
   completedArray.push(item);
   renderToDoList(toDoListArray, currentFolder);
-  totalToDos(toDoListArray);
-  renderCompletedList(completedArray);
+
+  renderCompletedList(completedArray, currentFolder);
   saveToDoList();
   saveCompletedList();
 }
@@ -128,12 +134,20 @@ activeCheckboxes.addEventListener('click', completeToDo);
 
 function completeToDo(e) {
   if (!e.target.classList.contains('todo-item__checkbox')) return;
-  // eslint-disable-next-line radix
-  let index = parseInt(e.target.dataset.index);
-  let completedToDo = toDoListArray.splice(index, 1);
-  completedToDo = completedToDo[0];
+  let index = e.target.dataset.index;
+  const folderToDoList = toDoListArray.filter(
+    (item) => item.folder === currentFolder
+  );
+  let completedToDo = folderToDoList[index];
+
+  let toDoId = completedToDo.id;
+
+  let taskPosition = toDoListArray.map((item) => item.id).indexOf(toDoId);
+  let objectFound = toDoListArray[taskPosition];
+  toDoListArray.splice(taskPosition, 1);
 
   updateCompleteList(completedToDo);
+  updateIds();
 }
 
 function checkDueDate() {
@@ -163,11 +177,17 @@ newDueDate.forEach((picker) =>
 );
 
 function changeDueDate(e) {
-  if (e.target.classList.contains('todo-item__due-date--picker')) {
-    const index = e.target.dataset.index;
-    const value = e.target.value;
-    toDoListArray[index].dueDate = value;
-  }
+  if (!e.target.classList.contains('todo-item__due-date--picker')) return;
+  const index = e.target.dataset.index;
+  const value = e.target.value;
+  const folderToDoList = toDoListArray.filter(
+    (item) => item.folder === currentFolder
+  );
+  let changedDateTask = folderToDoList[index];
+  let toDoId = changedDateTask.id;
+
+  let taskPosition = toDoListArray.map((item) => item.id).indexOf(toDoId);
+  toDoListArray[taskPosition].dueDate = value;
 }
 
 export {
@@ -183,5 +203,6 @@ export {
   changeDueDate,
   addFolder,
   activateFolder,
+  updateIds,
   currentFolder,
 };
