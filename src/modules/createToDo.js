@@ -2,10 +2,8 @@
 import {
   renderToDoList,
   clearInputs,
-  totalToDos,
   renderCompletedList,
   renderFolderList,
-  showFolderInput,
   renderFolderStyling,
 } from './renderToDos';
 

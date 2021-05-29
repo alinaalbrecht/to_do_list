@@ -1,14 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 import {
   toDoListArray,
-  createToDo,
-  updateToDoList,
-  completeToDo,
   checkDueDate,
   saveToDoList,
-  changeDueDate,
-  folderArray,
-  activateFolder,
   currentFolder,
 } from './createToDo';
 
@@ -117,7 +111,7 @@ function renderCompletedList(listArray, folder) {
   const folderCompletedList = listArray.filter(
     (item) => item.folder === folder
   );
-  const title = document.querySelector('.completed-list__title');
+  let title = document.querySelector('.completed-list__title');
   const completedListMarkup = folderCompletedList.map(
     (item) => `
       <div class="completed-list__todo-item">
@@ -128,8 +122,10 @@ function renderCompletedList(listArray, folder) {
   );
 
   completedList.innerHTML = completedListMarkup.join('');
-  if (folderCompletedList.length > 0 && title.classList.contains('hidden')) {
-    title.classList.remove('hidden');
+  if (folderCompletedList.length > 0) {
+    title.textContent = 'Completed';
+  } else if (folderCompletedList.length === 0) {
+    title.textContent = '';
   }
 }
 
