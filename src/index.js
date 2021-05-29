@@ -12,6 +12,7 @@ import {
   folderArray,
   addFolder,
   activateFolder,
+  currentFolder,
 } from './modules/createToDo';
 import {
   renderToDoList,

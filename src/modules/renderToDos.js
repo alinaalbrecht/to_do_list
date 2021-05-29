@@ -9,31 +9,35 @@ import {
   changeDueDate,
   folderArray,
   activateFolder,
+  currentFolder,
 } from './createToDo';
 
 function clearInputs(input) {
   input.value = '';
 }
 
-function renderToDoList(listArray) {
+function renderToDoList(listArray, folder) {
   const toDoList = document.querySelector('.main-content__to-do-list');
-
+  const folderToDoList = listArray.filter((item) => item.folder === folder);
+  console.log(folder);
+  console.log(listArray);
+  console.log(folderToDoList);
   const toDoListMarkup = [];
 
-  for (let i = 0; i < listArray.length; i++) {
-    if (listArray[i].overdue === true) {
+  for (let i = 0; i < folderToDoList.length; i++) {
+    if (folderToDoList[i].overdue === true) {
       toDoListMarkup.push(
         `<div class="to-do-list__todo-item" data-index="${i}">
 
         <div class="todo-item__checkbox" id="${
-          listArray[i].name
+          folderToDoList[i].name
         }" data-index="${i}"></div>
-        <p class="todo-item__name">${listArray[i].name}</p>
+        <p class="todo-item__name">${folderToDoList[i].name}</p>
 
         <p class="todo-item__due-date--set-date overdue" data-index="${i}">${
-          listArray[i].dueDate !== 'no due date'
-            ? listArray[i].dueDate.split('-').reverse().join('.')
-            : listArray[i].dueDate
+          folderToDoList[i].dueDate !== 'no due date'
+            ? folderToDoList[i].dueDate.split('-').reverse().join('.')
+            : folderToDoList[i].dueDate
         }</p>
         <input class="todo-item__due-date--picker hidden" data-index="${i}" type="date" name="date">
         </div>`
@@ -43,13 +47,13 @@ function renderToDoList(listArray) {
         `<div class="to-do-list__todo-item" data-index="${i}">
 
         <div class="todo-item__checkbox" id="${
-          listArray[i].name
+          folderToDoList[i].name
         }" data-index="${i}"></div>
-        <p class="todo-item__name">${listArray[i].name}</p>
+        <p class="todo-item__name">${folderToDoList[i].name}</p>
         <p class="todo-item__due-date--set-date not-overdue" data-index="${i}">${
-          listArray[i].dueDate !== 'no due date'
-            ? listArray[i].dueDate.split('-').reverse().join('.')
-            : listArray[i].dueDate
+          folderToDoList[i].dueDate !== 'no due date'
+            ? folderToDoList[i].dueDate.split('-').reverse().join('.')
+            : folderToDoList[i].dueDate
         }</p>
         <input class="todo-item__due-date--picker hidden" data-index="${i}" type="date" name="date">
         </div>`
@@ -79,7 +83,7 @@ function renderFolderStyling(folder, target) {
   const folders = [...document.querySelectorAll('.folder')];
   folders.forEach((item) => item.classList.remove('folder--active'));
   target.parentElement.classList.add('folder--active');
-  console.log(target.parentElement);
+  /* console.log(target.parentElement); */
 }
 
 const setDates = document.querySelector('.main-content__to-do-list');
@@ -106,7 +110,7 @@ function removeDatePicker(e) {
     toggle.previousSibling.previousElementSibling.classList.remove('hidden');
     toggle.classList.add('hidden');
     checkDueDate();
-    renderToDoList(toDoListArray);
+    renderToDoList(toDoListArray, currentFolder);
     saveToDoList();
   }
 }

@@ -34,7 +34,7 @@ const completedArray = JSON.parse(
 );
 
 (function () {
-  renderToDoList(toDoListArray);
+  renderToDoList(toDoListArray, currentFolder);
   totalToDos(toDoListArray);
   renderCompletedList(completedArray);
   checkDueDate();
@@ -48,7 +48,7 @@ let toDoInput = document.querySelector('.main-content__add-todo');
 toDoInput.addEventListener('keypress', createToDo);
 
 function createToDo(e) {
-  console.log(currentFolder);
+  /* console.log(currentFolder); */
   let toDoName = taskName.value;
   let dueDate = document.querySelector('.add-todo__due-date');
 
@@ -88,8 +88,9 @@ function activateFolder(e) {
   let index = e.target.dataset.index;
   let target = e.target;
   currentFolder = folderArray[index];
-  console.log(currentFolder);
+  /* console.log(currentFolder); */
   renderFolderStyling(currentFolder, target);
+  renderToDoList(toDoListArray, currentFolder);
 }
 
 function saveToDoList() {
@@ -108,14 +109,14 @@ function updateToDoList(item) {
   toDoListArray.push(item);
   checkDueDate();
   totalToDos(toDoListArray);
-  renderToDoList(toDoListArray);
+  renderToDoList(toDoListArray, currentFolder);
   saveToDoList();
-  console.log(toDoListArray);
+  /* console.log(toDoListArray); */
 }
 
 function updateCompleteList(item) {
   completedArray.push(item);
-  renderToDoList(toDoListArray);
+  renderToDoList(toDoListArray, currentFolder);
   totalToDos(toDoListArray);
   renderCompletedList(completedArray);
   saveToDoList();
@@ -153,7 +154,7 @@ function checkDueDate() {
       console.log('none of the above');
     }
   }
-  renderToDoList(toDoListArray);
+  renderToDoList(toDoListArray, currentFolder);
 }
 
 const newDueDate = document.querySelectorAll('.main-content__to-do-list');
@@ -182,4 +183,5 @@ export {
   changeDueDate,
   addFolder,
   activateFolder,
+  currentFolder,
 };
